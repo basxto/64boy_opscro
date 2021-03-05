@@ -1,0 +1,10 @@
+64BOY_OPCODE_ART 
+0.0.1 
+-
+This is a DMG/CGB ROM for the 64B compo of
+LOVEBYTE 2021. The 64B version does not work
+on real hardware, but on some DMG emulators
+if logo and checksum are ignored and padded
+with $FF. fixedheader.gb has 55B of the 80B
+header set, 52B needed by DMG/CGB/SGB & rest
+for better emulator/flashcart compatibility.

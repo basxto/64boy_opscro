@@ -11,17 +11,17 @@ DD = dd
 RGBFIX = $(RGBDS)rgbfix
 
 .PHONY: all clean
-all: main.micro.gb
+all: main.min.gb
 
 
 %.gb: %.o
 	$(LD) $(LDFLAGS) -o $@ $<
 
-%.micro.gb: %.gb
+%.min.gb: %.gb
 	$(DD) if=$< of=$@ bs=1 count=64
 
 # Just increase size and fill with $FF
-%.padded.gb: %.micro.gb
+%.padded.gb: %.min.gb
 	$(DD) if=/dev/zero ibs=1 count=32KiB | tr "\000" "\377" > "$@"
 	$(DD) if="$^" of="$@" conv=notrunc
 
