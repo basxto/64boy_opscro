@@ -16,8 +16,7 @@ init:
     ; we are at the end of 64B
     jr main
 
-
-SECTION "MAIN", ROM0[$13-8]
+SECTION "MAIN", ROM0[$11]
 main:
     ; a: $00
     ; b: $90
@@ -44,6 +43,8 @@ main:
     ; set up tilemap
     ld h, $98 
     ;ld a, 12
+    ; we can't assume it being $FF
+    xor a
     ; b is set to 0
     rst alternator
     rst alternator
@@ -61,13 +62,14 @@ main:
     ; b got decreased
     jr NZ, .waitloop
     ; just scroll background
-    inc [hl]
+    dec [hl]
     dec hl ; rSCX
     inc [hl]
     inc hl ; rSCY
     ; just loop infinitely
     jr .infloop
-SECTION "WAITLY", ROM0[$28]
+
+SECTION "WAITLY", ROM0[$30]
     ; wait for rLY == B
     ; returns with A = C = 0
 waitly:
@@ -78,36 +80,31 @@ waitly:
     dec b
     ret
 
-SECTION "ALT", ROM0[$30]
+SECTION "ALT", ROM0[$0]
 ; hl: destination
 ; de: source
 ; b: amount (0 is 256 times)
 alternator:
-    xor a
+    inc a
     ld [hl+], a ; 1
     cpl
     ld [hl+], a ; 1
     dec b ; 1
     jr NZ, alternator ; 2
     ret ; 1
-SECTION "VMEMCPY", ROM0[$0]
+
+SECTION "VMEMCPY", ROM0[$8]
 ; hl: destination
 ; de: source
 ; b: amount (0 is 256 times)
 vmemcpy:
 .loop:
     ; read
-    ;inc de ; 1
-    ;inc de
     ld a, [de] ; 1
     inc de ; 1
-    inc de
-    ; write as 0.5BPP
+    ; write as 1BPP
     ld [hl+], a ; 1
     ld [hl+], a ; 1
-    ;inc de
-    ;;ld [hl+], a ; 1
-    ;;ld [hl+], a ; 1
     dec b ; 1
     ; loop while b != 0
     jr NZ, .loop ; 2
