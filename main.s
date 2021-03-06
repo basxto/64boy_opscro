@@ -17,7 +17,7 @@ init:
     jr main
 
 
-SECTION "MAIN", ROM0[$13]
+SECTION "MAIN", ROM0[$13-8]
 main:
     ; a: $00
     ; b: $90
@@ -67,7 +67,7 @@ main:
     inc hl ; rSCY
     ; just loop infinitely
     jr .infloop
-SECTION "WAITLY", ROM0[$30]
+SECTION "WAITLY", ROM0[$28]
     ; wait for rLY == B
     ; returns with A = C = 0
 waitly:
@@ -78,7 +78,7 @@ waitly:
     dec b
     ret
 
-SECTION "ALT", ROM0[$0]
+SECTION "ALT", ROM0[$30]
 ; hl: destination
 ; de: source
 ; b: amount (0 is 256 times)
@@ -90,22 +90,27 @@ alternator:
     dec b ; 1
     jr NZ, alternator ; 2
     ret ; 1
-SECTION "VMEMCPY", ROM0[$8]
+SECTION "VMEMCPY", ROM0[$0]
 ; hl: destination
 ; de: source
 ; b: amount (0 is 256 times)
 vmemcpy:
+.loop:
     ; read
+    ;inc de ; 1
+    ;inc de
     ld a, [de] ; 1
     inc de ; 1
+    inc de
     ; write as 0.5BPP
     ld [hl+], a ; 1
     ld [hl+], a ; 1
-    ld [hl+], a ; 1
-    ld [hl+], a ; 1
+    ;inc de
+    ;;ld [hl+], a ; 1
+    ;;ld [hl+], a ; 1
     dec b ; 1
     ; loop while b != 0
-    jr NZ, vmemcpy ; 2
+    jr NZ, .loop ; 2
     ; clean up l
     ld  l, b
     ret ; 1
