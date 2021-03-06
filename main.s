@@ -8,7 +8,7 @@ init:
     ld b, $91
     ; make sure to be in mode 1
     ; to not damage DMG's display
-    rst $30
+    rst waitly
     ; returns with A=0
     ; set palette index #0
     ldh [rBCPS], a
@@ -40,13 +40,13 @@ main:
     ld e, a
     ; amount b is still set 0x90
     ; copies whole code as tiles and a bit more
-    rst $8 ; call vmemcpy
+    rst vmemcpy
     ; set up tilemap
     ld h, $98 
     ;ld a, 12
     ; b is set to 0
-    rst $0 ; call alternator
-    rst $0 ; call alternator
+    rst alternator
+    rst alternator
     ; enable stat
     ld a, LCDCF_ON | LCDCF_BGON
     ldh [rLCDC], a
@@ -57,7 +57,7 @@ main:
     ; exits on LY=1
     ld b, l ; l = $43
 .waitloop:
-    rst $30 ; waitly
+    rst waitly
     ; b got decreased
     jr NZ, .waitloop
     ; just scroll background
