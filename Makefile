@@ -15,18 +15,24 @@ all: main.min.gb
 
 
 %.gb: %.o
-	$(LD) $(LDFLAGS) -o $@ $<
+	$(LD) $(LDFLAGS) -n $*.sym -m $*.map -o $@ $<
 
 %.min.gb: %.gb
 	$(DD) if=$< of=$@ bs=1 count=64
+	cp $*.sym $*.min.sym
+	cp $*.map $*.min.map
 
 # Just increase size and fill with $FF
 %.padded.gb: %.min.gb
 	$(DD) if=/dev/zero ibs=1 count=32KiB | tr "\000" "\377" > "$@"
 	$(DD) if="$^" of="$@" conv=notrunc
+	cp $*.min.sym $*.padded.sym
+	cp $*.min.map $*.padded.map
 
 # Fix the header
 %.fixedheader.gb: %.padded.gb
+	cp $*.padded.sym $*.fixedheader.sym
+	cp $*.padded.map $*.fixedheader.map
 	cp "$^" "$@"
 # 0x100 (rst $38): 1B
 # We assume everything being $FF
