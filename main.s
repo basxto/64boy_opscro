@@ -42,9 +42,8 @@ main:
     rst vmemcpy
     ; set up tilemap
     ld h, $98 
-    ;ld a, 12
     ; we can't assume it being $FF
-    xor a
+    ld a, 6
     ; b is set to 0
     rst alternator
     rst alternator
@@ -69,7 +68,7 @@ main:
     ; just loop infinitely
     jr .infloop
 
-SECTION "WAITLY", ROM0[$30]
+SECTION "WAITLY", ROM0[$0]
     ; wait for rLY == B
     ; returns with A = C = 0
 waitly:
@@ -80,7 +79,7 @@ waitly:
     dec b
     ret
 
-SECTION "ALT", ROM0[$0]
+SECTION "ALT", ROM0[$30]
 ; hl: destination
 ; de: source
 ; b: amount (0 is 256 times)
@@ -100,8 +99,8 @@ SECTION "VMEMCPY", ROM0[$8]
 vmemcpy:
 .loop:
     ; read
-    ld a, [de] ; 1
     inc de ; 1
+    ld a, [de] ; 1
     ; write as 1BPP
     ld [hl+], a ; 1
     ld [hl+], a ; 1
