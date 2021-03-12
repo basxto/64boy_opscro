@@ -11,20 +11,20 @@ DD = dd
 RGBFIX = $(RGBDS)rgbfix
 
 .PHONY: all clean
-all: 64boy_opscro.min.gb
+all: 128boy_opscro.min.gb
 
 
 %.gb: %.o
 	$(LD) $(LDFLAGS) -n $*.sym -m $*.map -o $@ $<
 
-64boy_opscro.gb: main.gb
+128boy_opscro.gb: main.gb
 	cp $^ $@
-	cp main.sym 64boy_opscro.sym
-	cp main.map 64boy_opscro.map
+	cp main.sym 128boy_opscro.sym
+	cp main.map 128boy_opscro.map
 
 
 %.min.gb: %.gb
-	$(DD) if=$< of=$@ bs=1 count=64
+	$(DD) if=$< of=$@ bs=1 count=337
 	cp $*.sym $*.min.sym
 	cp $*.map $*.min.map
 
@@ -44,7 +44,7 @@ all: 64boy_opscro.min.gb
 # We assume everything being $FF
 # but this really *has to* be $FF
 # Effectively sets starting address
-	printf "\377" | $(DD) of="${@}" bs=1 seek=$$((0x100)) conv=notrunc
+#	printf "\377" | $(DD) of="${@}" bs=1 seek=$$((0x100)) conv=notrunc
 # Random data can render it unplayable:
 # cgb flag: 1B
 	printf "\200" | $(DD) of="${@}" bs=1 seek=$$((0x143)) conv=notrunc
