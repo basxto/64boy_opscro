@@ -9,10 +9,10 @@ Target platforms are the classic Game Boy (DMG), Super Game Boy (SGB) and Game B
 WHAT RUNS WHERE
 ===============
 
-main.fixedheader.gb is 32KiB (64B ROM + valid headers + lots of 0xFF) with enough flags set to run on hopefully all dmg, sgb and cgb emulators as well as the real hardware with flashcards.
+64boy_opscro.fixedheader.gb is 32KiB (64B ROM + valid headers + lots of 0xFF) with enough flags set to run on hopefully all dmg, sgb and cgb emulators as well as the real hardware with flashcards.
 It was tested on [SameBoy][], [Emulicious][], [BGB][] and on CGB with [EVERDRIVE GB X3][edgbx3].
 
-main.min.gb is only 64B, this will run on Emulicious and on SameBoy if it's set to DMG mode. This can't run on hardware because the headers are missing.
+64boy_opscro.min.gb is only 64B, this will run on Emulicious and on SameBoy if it's set to DMG mode. This can't run on hardware because the headers are missing.
 
 
 WHY 32KiB
@@ -29,7 +29,7 @@ Furthermore I set CGB (0x143 to enabled) and SGB (0x146 to disabled) flag.
 Those are all bytes which are checked/needed by the hardware.
 I furthermore set cartridge type (0x147), ROM size (0x148), RAM size (0x149) so that emulators/flashcarts know which cartridges to emulate.
 
-If you have gnu coreutils, gnu make, dd and [rgbfix][] installed, you can recreate main.fixedheader.gb from main.mini.gb with `make main.fixedheader.gb`
+If you have gnu coreutils, gnu make, dd and [rgbfix][] installed, you can recreate 64boy_opscro.fixedheader.gb from 64boy_opscro.mini.gb with `make 64boy_opscro.fixedheader.gb`.
 
 
 HOW 64B ROM WORK

@@ -11,11 +11,17 @@ DD = dd
 RGBFIX = $(RGBDS)rgbfix
 
 .PHONY: all clean
-all: main.min.gb
+all: 64boy_opscro.min.gb
 
 
 %.gb: %.o
 	$(LD) $(LDFLAGS) -n $*.sym -m $*.map -o $@ $<
+
+64boy_opscro.gb: main.gb
+	cp $^ $@
+	cp main.sym 64boy_opscro.sym
+	cp main.map 64boy_opscro.map
+
 
 %.min.gb: %.gb
 	$(DD) if=$< of=$@ bs=1 count=64
@@ -56,4 +62,4 @@ all: main.min.gb
 # total: 55B
 
 clean:
-	$(RM) *.gb *.o
+	$(RM) *.gb *.o *.sym *.map
