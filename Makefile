@@ -61,5 +61,8 @@ all: 64boy_opscro.min.gb
 	$(RGBFIX) -f lh $@
 # total: 55B
 
+%.zip: %.fixedheader.gb %.min.gb
+	zip $@ $^ $*.min.gb Makefile README.md FILE_ID.DIZ screenshot.png screencap.mp4
+
 clean:
-	$(RM) *.gb *.o *.sym *.map
+	$(RM) *.gb *.o *.sym *.map *.zip

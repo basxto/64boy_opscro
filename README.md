@@ -29,11 +29,11 @@ Furthermore I set CGB (0x143 to enabled) and SGB (0x146 to disabled) flag.
 Those are all bytes which are checked/needed by the hardware.
 I furthermore set cartridge type (0x147), ROM size (0x148), RAM size (0x149) so that emulators/flashcarts know which cartridges to emulate.
 
-If you have gnu coreutils, gnu make, dd and [rgbfix][] installed, you can recreate 64boy_opscro.fixedheader.gb from 64boy_opscro.mini.gb with `make 64boy_opscro.fixedheader.gb`.
+If you have gnu coreutils, gnu make, dd and [rgbfix][] installed, you can recreate 64boy_opscro.fixedheader.gb from 64boy_opscro.min.gb with `make 64boy_opscro.fixedheader.gb`.
 
 
-HOW 64B ROM WORK
-================
+HOW 64B ROM WORKS
+=================
 
 It assumes the emulator fills the rest of the ROM with 0xFF, which Emulicious and SameBoy do and I would expect an embty flashcart to be all 0xFF, so it look similar if only the first 64B are overwritten.
 The program starts at 0x100 which will do `rst $38` (machine code 0xFF) and therefore jump into the first 64B.
