@@ -9,7 +9,7 @@ Target platforms are the classic Game Boy (DMG), Super Game Boy (SGB) and Game B
 WHAT RUNS WHERE
 ===============
 
-128boy_opscro.fixedheader.gb is 32KiB (335B ROM (including valid headers) + lots of 0xFF) with enough flags set to run on hopefully all dmg, sgb and cgb emulators as well as the real hardware with flashcards.
+128boy_opscro.fixedheader.gb is 32KiB (336B ROM (including valid headers) + lots of 0xFF) with enough flags set to run on hopefully all dmg, sgb and cgb emulators as well as the real hardware with flashcards.
 It was tested on [SameBoy][], [Emulicious][], [BGB][] and on CGB with [EVERDRIVE GB X3][edgbx3].
 
 
@@ -23,7 +23,7 @@ HOW 128B ROM WORKS
 
 Bytes 0x30 to 0xFF are left at don't care, since the header is not at the start of the rom.
 Programs start at 0x100, which is also seen as the start of the "header" (as defined by [gbdev pandocs][doc]).
-The "header" goes until 0x014F, consecutively BGB refuses to run ROMs smaller than 335B.
+The "header" goes until 0x014F, consecutively BGB refuses to run ROMs smaller than 336B.
 But this "header" isn't the header, I consider for "given that the header is not larger than the intro itself".
 I only set 55B, the rest is overwritten with code, just the checksum would need to be updated in such a case.
 I set 0x100 to `rst $38` to call 0x38, which is my real starting address.

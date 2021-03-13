@@ -24,7 +24,7 @@ all: 128boy_opscro.min.gb
 
 
 %.min.gb: %.fixedheader.gb
-	$(DD) if=$< of=$@ bs=1 count=335
+	$(DD) if=$< of=$@ bs=1 count=336
 	cp $*.fixedheader.sym $*.min.sym
 	cp $*.fixedheader.map $*.min.map
 
