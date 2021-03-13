@@ -23,17 +23,17 @@ all: 128boy_opscro.min.gb
 	cp main.map 128boy_opscro.map
 
 
-%.min.gb: %.gb
-	$(DD) if=$< of=$@ bs=1 count=337
-	cp $*.sym $*.min.sym
-	cp $*.map $*.min.map
+%.min.gb: %.fixedheader.gb
+	$(DD) if=$< of=$@ bs=1 count=335
+	cp $*.fixedheader.sym $*.min.sym
+	cp $*.fixedheader.map $*.min.map
 
 # Just increase size and fill with $FF
-%.padded.gb: %.min.gb
+%.padded.gb: %.gb
 	$(DD) if=/dev/zero ibs=1 count=32KiB | tr "\000" "\377" > "$@"
 	$(DD) if="$^" of="$@" conv=notrunc
-	cp $*.min.sym $*.padded.sym
-	cp $*.min.map $*.padded.map
+	cp $*.sym $*.padded.sym
+	cp $*.map $*.padded.map
 
 # Fix the header
 %.fixedheader.gb: %.padded.gb

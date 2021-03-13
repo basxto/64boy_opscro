@@ -3,4 +3,5 @@
 -
 This is a DMG/CGB ROM for the 128B compo of
 LOVEBYTE 2021. 128B version of
-64BOY_OPCODE_SCROLL.
+64BOY_OPCODE_SCROLL. Bytes 0x30 to 0xFF are
+left in don't care state.
